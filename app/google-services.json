@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234564560105",
+    "project_id": "avchatapp",
+    "storage_bucket": "avchatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234564560105:android:661b9236ec3661cd283c78",
+        "android_client_info": {
+          "package_name": "com.av.avmessenger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN_TBuhWh8bZbYHONuGXIxOsJfhqscTs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
