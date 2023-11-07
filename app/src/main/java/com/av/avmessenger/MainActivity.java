@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
-say wht
+
     FirebaseAuth auth;
     RecyclerView mainUserRecyclerView;
     UserAdpter  adapter;
