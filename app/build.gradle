@@ -8,7 +8,9 @@ plugins {
 android {
     namespace 'com.av.avmessenger'
     compileSdk 34
-
+    buildFeatures {
+        dataBinding true
+    }
     defaultConfig {
         applicationId "com.av.avmessenger"
         minSdk 16
