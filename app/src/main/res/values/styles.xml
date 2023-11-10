@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color> <!-- Example color, you can use your own hex color code -->
+    <color name="colorPrimaryDark">#303F9F</color> <!-- Define your primary dark color here -->
+    <color name="colorAccent">#FF4081</color> <!-- Example accent color, you can use your own color -->
+</resources>
