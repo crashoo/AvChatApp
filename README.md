@@ -17,7 +17,7 @@ The messaging app allows users to send and receive messages. It supports real-ti
 
 ## Technologies Used
 
-- [Kotlin](https://kotlinlang.org/) - Kotlin is a cross-platform, statically typed, general-purpose high-level programming language with type inference.
+- [Java](https://www.java.com/en/) - JAVA is a programming language which is used in Android App Development.
 - [Firebase Realtime Database](https://firebase.google.com/docs/database) - The Firebase Realtime Database is a cloud-hosted NoSQL database that lets you store and sync data between your users in realtime.
 - [Firebase Authentication](https://firebase.google.com/docs/auth) - Firebase Authentication provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users to your app.
 - [Firebase Storage](https://firebase.google.com/docs/storage) - Firebase lets you upload and share user generated content, such as images and video, which allows you to build rich media content into your apps.
