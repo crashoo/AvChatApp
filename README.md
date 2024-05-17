@@ -48,10 +48,6 @@ dependencies
 
 To use the messaging app, users need to sign up for an account or sign in if they already have one. After signing in, they can start sending and receiving messages with other users who are also signed in.
 
-## Screenshots (Optional)
-
-Include screenshots or gifs of your app if applicable.
-
 
 
 //just in case change file name to "AV_Messenger-master"
