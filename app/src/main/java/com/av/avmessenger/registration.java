@@ -111,13 +111,13 @@ public class registration extends AppCompatActivity {
                                                      @Override
                                                      public void onSuccess(Uri uri) {
                                                          imageuri = uri.toString();
-                                                         Users users = new Users(id,namee,emaill,Password,imageuri,status);
-                                                         reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                         User user = new User(id,namee,emaill,Password,imageuri,status);
+                                                         reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                              @Override
                                                              public void onComplete(@NonNull Task<Void> task) {
                                                                  if (task.isSuccessful()){
                                                                      progressDialog.show();
-                                                                     Intent intent = new Intent(registration.this,MainActivity.class);
+                                                                     Intent intent = new Intent(registration.this, MainActivityMessage.class);
                                                                      startActivity(intent);
                                                                      finish();
                                                                  }else {
@@ -133,13 +133,13 @@ public class registration extends AppCompatActivity {
                                  }else {
                                      String status = "Hey I'm Using This Application";
                                      imageuri = "https://firebasestorage.googleapis.com/v0/b/av-messenger-dc8f3.appspot.com/o/man.png?alt=media&token=880f431d-9344-45e7-afe4-c2cafe8a5257";
-                                     Users users = new Users(id,namee,emaill,Password,imageuri,status);
-                                     reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                     User user = new User(id,namee,emaill,Password,imageuri,status);
+                                     reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                          @Override
                                          public void onComplete(@NonNull Task<Void> task) {
                                              if (task.isSuccessful()){
                                                  progressDialog.show();
-                                                 Intent intent = new Intent(registration.this,MainActivity.class);
+                                                 Intent intent = new Intent(registration.this, MainActivityMessage.class);
                                                  startActivity(intent);
                                                  finish();
                                              }else {

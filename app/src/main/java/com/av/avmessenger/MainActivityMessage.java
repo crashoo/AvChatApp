@@ -3,16 +3,11 @@ package com.av.avmessenger;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,22 +21,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityMessage extends AppCompatActivity {
     private static final int CONTACT_LIST_REQUEST_CODE = 123;
     FirebaseAuth auth;
     RecyclerView mainUserRecyclerView;
     UserAdpter adapter;
     FirebaseDatabase database;
-    ArrayList<Users> selectedUsersList = new ArrayList<>();  // Updated list for selected users
+    ArrayList<User> selectedUserList = new ArrayList<>();  // Updated list for selected users
     ImageView imglogout;
-    ImageView cumbut, setbut;
+    ImageView setbut;
 
     private void startContactListsActivity() {
-        Intent intent = new Intent(MainActivity.this, ContactListsActivity.class);
+        Intent intent = new Intent(MainActivityMessage.this, ContactListsActivity.class);
         startActivityForResult(intent, CONTACT_LIST_REQUEST_CODE);
     }
 
@@ -66,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Users selectedUser = snapshot.getValue(Users.class);
+                    User selectedUser = snapshot.getValue(User.class);
 
                     if (selectedUser != null) {
                         // Add the selected user to the selected users list
-                        selectedUsersList.add(selectedUser);
+                        selectedUserList.add(selectedUser);
 
                         // Update the adapter with the selected users list
-                        adapter.setUsersList(selectedUsersList);
+                        adapter.setUsersList(selectedUserList);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -90,19 +84,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_message);
         getSupportActionBar().hide();
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-        cumbut = findViewById(R.id.camBut);
         setbut = findViewById(R.id.settingBut);
 
         DatabaseReference reference = database.getReference().child("user");
 
         mainUserRecyclerView = findViewById(R.id.mainUserRecyclerView);
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new UserAdpter(MainActivity.this, selectedUsersList);
+        adapter = new UserAdpter(MainActivityMessage.this, selectedUserList);
         mainUserRecyclerView.setAdapter(adapter);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -110,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Users users = dataSnapshot.getValue(Users.class);
+                    User user = dataSnapshot.getValue(User.class);
                     // Assuming you want to display only selected users
                     // Modify the condition based on your criteria
-                    if (users != null && isUserSelected(users.getUserId())) {
-                        selectedUsersList.add(users);
+                    if (user != null && isUserSelected(user.getUserId())) {
+                        selectedUserList.add(user);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -124,10 +117,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
             private boolean isUserSelected(String userId) {
                 // Implement your logic to determine if the user is selected
                 // For example, you can check if the user is in the selectedUsersList
-                for (Users selectedUser : selectedUsersList) {
+                for (User selectedUser : selectedUserList) {
                     if (selectedUser.getUserId().equals(userId)) {
                         return true;
                     }
@@ -142,16 +136,16 @@ public class MainActivity extends AppCompatActivity {
         imglogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new Dialog(MainActivity.this, R.style.dialoge);
+                Dialog dialog = new Dialog(MainActivityMessage.this, R.style.dialoge);
                 dialog.setContentView(R.layout.dialog_layout);
                 Button no, yes;
                 yes = dialog.findViewById(R.id.yesbnt);
-                no = dialog.findViewById(R.id.nobnt);
+                no = dialog.findViewById(R.id.nobutton);
                 yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         FirebaseAuth.getInstance().signOut();
-                        Intent inten = new Intent(MainActivity.this, login.class);
+                        Intent inten = new Intent(MainActivityMessage.this, login.class);
                         startActivity(inten);
                         finish();
                     }
@@ -173,17 +167,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cumbut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 10);
-            }
-        });
+
 
         if (auth.getCurrentUser() == null) {
-            Intent intent = new Intent(MainActivity.this, login.class);
+            // If not logged in, redirect to the login activity
+            Intent intent = new Intent(MainActivityMessage.this, login.class);
             startActivity(intent);
+            finish();
+        } else {
+            // If logged in, fetch and display user contacts
+            loadUserContacts(auth.getCurrentUser().getUid());
         }
     }
-}
+        private void loadUserContacts(String userId) {
+            DatabaseReference userContactsRef = database.getReference("user_contactsss").child(userId);
+
+            userContactsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    // Clear the existing list of selected users
+                    selectedUserList.clear();
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        String selectedUserId = dataSnapshot.getKey();
+
+                        // Fetch details of the selected user and add to the list
+                        fetchUserDetails(selectedUserId);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle the error if fetching data fails
+                }
+            });
+        }
+    }

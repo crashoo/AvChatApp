@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +32,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class chatwindo extends AppCompatActivity {
     String reciverimg, reciverUid,reciverName,SenderUID;
-    CircleImageView profile;
+    ImageView profile;
     TextView reciverNName;
     FirebaseDatabase database;
     FirebaseAuth firebaseAuth;
     public  static String senderImg;
     public  static String reciverIImg;
-    CardView sendbtn;
+    Button sendbtn;
     EditText textmsg;
 
     String senderRoom,reciverRoom;
@@ -69,7 +71,7 @@ public class chatwindo extends AppCompatActivity {
         messageAdpter.setAdapter(mmessagesAdpter);
 
 
-        Picasso.get().load(reciverimg).into(profile);
+
         reciverNName.setText(""+reciverName);
 
         SenderUID =  firebaseAuth.getUid();

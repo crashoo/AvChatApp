@@ -1,17 +1,11 @@
 package com.av.avmessenger;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.telephony.SmsManager;
-import android.util.Pair;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -46,7 +40,7 @@ public class splash extends AppCompatActivity {
       new Handler().postDelayed(new Runnable() {
           @Override
           public void run() {
-              Intent intent = new Intent(splash.this,MainActivity.class);
+              Intent intent = new Intent(splash.this, MainActivityMessage.class);
               startActivity(intent);
               finish();
           }

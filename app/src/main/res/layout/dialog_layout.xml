@@ -11,7 +11,7 @@
         android:id="@+id/logoutdia"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
-        android:src="@drawable/logout"
+
         android:layout_gravity="center"
         android:layout_margin="13dp"/>
 
@@ -30,7 +30,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/nobnt"
+            android:id="@+id/nobutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="13dp"

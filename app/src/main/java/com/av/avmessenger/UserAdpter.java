@@ -14,11 +14,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdpter extends RecyclerView.Adapter<UserAdpter.viewholder> {
     Context mainActivity;
-    ArrayList<Users> usersArrayList;
+    ArrayList<User> userArrayList;
 
-    public UserAdpter(MainActivity mainActivity, ArrayList<Users> usersArrayList) {
-        this.mainActivity = mainActivity;
-        this.usersArrayList = usersArrayList;
+    public UserAdpter(MainActivityMessage mainActivityMessage, ArrayList<User> userArrayList) {
+        this.mainActivity = mainActivityMessage;
+        this.userArrayList = userArrayList;
     }
 
     @NonNull
@@ -30,18 +30,18 @@ public class UserAdpter extends RecyclerView.Adapter<UserAdpter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserAdpter.viewholder holder, int position) {
-        Users users = usersArrayList.get(position);
-        holder.username.setText(users.userName);
-        holder.userstatus.setText(users.status);
-        Picasso.get().load(users.profilepic).into(holder.userimg);
+        User user = userArrayList.get(position);
+        holder.username.setText(user.userName);
+        holder.userstatus.setText(user.status);
+        Picasso.get().load(user.profilepic).into(holder.userimg);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mainActivity, chatwindo.class);
-                intent.putExtra("nameeee", users.getUserName());
-                intent.putExtra("reciverImg", users.getProfilepic());
-                intent.putExtra("uid", users.getUserId());
+                intent.putExtra("nameeee", user.getUserName());
+                intent.putExtra("reciverImg", user.getProfilepic());
+                intent.putExtra("uid", user.getUserId());
                 mainActivity.startActivity(intent);
             }
         });
@@ -49,11 +49,11 @@ public class UserAdpter extends RecyclerView.Adapter<UserAdpter.viewholder> {
 
     @Override
     public int getItemCount() {
-        return usersArrayList.size();
+        return userArrayList.size();
     }
 
-    public void setUsersList(ArrayList<Users> usersList) {
-        this.usersArrayList = usersList;
+    public void setUsersList(ArrayList<User> userList) {
+        this.userArrayList = userList;
     }
 
     public class viewholder extends RecyclerView.ViewHolder {

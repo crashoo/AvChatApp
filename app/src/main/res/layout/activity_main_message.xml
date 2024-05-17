@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainback"
-    tools:context=".MainActivity">
+    tools:context=".MainActivityMessage">
 
     <LinearLayout
         android:id="@+id/toolBar"
@@ -30,7 +29,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/app_name"
+            android:text="Messages"
             android:textColor="#2a364e"
             android:textSize="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_10sdp" />
@@ -59,33 +58,14 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="167dp"
+
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
-        android:layout_marginBottom="104dp" />
+         />
 
-    <ImageView
-        android:id="@+id/camBut"
-        android:layout_width="47dp"
-        android:layout_height="38dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="232dp"
-        android:layout_marginRight="232dp"
-        android:layout_marginBottom="37dp"
-        android:src="@drawable/camera" />
 
-    <ImageView
-        android:layout_width="47dp"
-        android:layout_height="38dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:layout_marginBottom="36dp"
-        android:src="@drawable/chat" />
+
+
 
     <ImageView
         android:id="@+id/settingBut"

@@ -1,7 +1,5 @@
 package com.av.avmessenger;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ContactListsActivity extends AppCompatActivity {
 
@@ -35,18 +32,12 @@ public class ContactListsActivity extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth firebaseAuth;
-    private ArrayList<Users> searchedUsers = new ArrayList<>();
-    private void handleUserSelection(Users selectedUser) {
+    private ArrayList<User> searchedUsers = new ArrayList<>();
+    private void handleUserSelection(User selectedUser) {
         // Get the UID of the selected user
         String selectedUserId = selectedUser.getUserId();
 
-        // Create an Intent to return the result to MainActivity
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("selectedUserId", selectedUserId);
 
-        // Set the result and finish the activity
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
     }
 
     @Override
@@ -77,9 +68,9 @@ public class ContactListsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Users user = dataSnapshot.getValue(Users.class);
+                            User user = dataSnapshot.getValue(User.class);
                             if (user != null && !user.getUserId().equals(firebaseAuth.getCurrentUser().getUid())
-                                    && user.getMail().equals(query.trim())) {
+                                    && user.getEmail().equals(query.trim())) {
                                 searchedUsers.add(user);
                                 displaySearchedUser(user);
                             }
@@ -103,9 +94,9 @@ public class ContactListsActivity extends AppCompatActivity {
         });
     }
 
-    private void displaySearchedUser(Users user) {
+    private void displaySearchedUser(User user) {
         userName.setText(user.getUserName());
-        userMail.setText(user.getMail());
+        userMail.setText(user.getEmail());
         Picasso.get().load(user.getProfilepic())
                 .fit()
                 .centerCrop()
@@ -117,14 +108,29 @@ public class ContactListsActivity extends AppCompatActivity {
         addContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Assuming you have the selected user ID
-                String selectedUserId = user.getUserId(); // Replace with the actual user ID
+                if (!searchedUsers.isEmpty()) {
+                    // Assuming you have the selected user ID
+                    User selectedUser = searchedUsers.get(0);
 
-                // Send the selected user ID back to MainActivity
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("selectedUserId", selectedUserId);
-                setResult(RESULT_OK, resultIntent);
-                finish();
+                    // Get the UID of the selected user
+                    String selectedUserId = selectedUser.getUserId();
+
+                    // Get the UID of the current logged-in user
+                    String currentUserId = firebaseAuth.getCurrentUser().getUid();
+
+                    // Store the contact in the database under the current user's contacts
+                    firebaseDatabase.getReference("user_contactsss").child(currentUserId).child(selectedUserId).setValue(true);
+
+                    // Provide feedback to the user
+                    Toast.makeText(ContactListsActivity.this, "Contact added successfully", Toast.LENGTH_SHORT).show();
+
+                    // Send the selected user ID back to MainActivity
+
+                }
+                else {
+                    // Handle the case where there are no searched users
+                    Toast.makeText(ContactListsActivity.this, "No users found", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -167,7 +167,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -175,7 +174,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -188,7 +186,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.util.GAuthToken;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -269,14 +266,14 @@ public class setting extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String finalImageUri = uri.toString();
-                                    Users users = new Users(auth.getUid(), name,email,password,finalImageUri,Status);
-                                    reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    User user = new User(auth.getUid(), name,email,password,finalImageUri,Status);
+                                    reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()){
                                                 progressDialog.dismiss();
                                                 Toast.makeText(setting.this, "Data Is save ", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(setting.this,MainActivity.class);
+                                                Intent intent = new Intent(setting.this, MainActivityMessage.class);
                                                 startActivity(intent);
                                                 finish();
                                             }else {
@@ -294,14 +291,14 @@ public class setting extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String finalImageUri = uri.toString();
-                            Users users = new Users(auth.getUid(), name,email,password,finalImageUri,Status);
-                            reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            User user = new User(auth.getUid(), name,email,password,finalImageUri,Status);
+                            reference.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
                                         progressDialog.dismiss();
                                         Toast.makeText(setting.this, "Data Is save ", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(setting.this,MainActivity.class);
+                                        Intent intent = new Intent(setting.this, MainActivityMessage.class);
                                         startActivity(intent);
                                         finish();
                                     }else {
