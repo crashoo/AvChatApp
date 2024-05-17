@@ -22,6 +22,8 @@ The messaging app allows users to send and receive messages. It supports real-ti
 - [Firebase Authentication](https://firebase.google.com/docs/auth) - Firebase Authentication provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users to your app.
 - [Firebase Storage](https://firebase.google.com/docs/storage) - Firebase lets you upload and share user generated content, such as images and video, which allows you to build rich media content into your apps.
 - [Material Design Components](https://m2.material.io/develop/android) - Material Design is a design language created by Google to help developers build digital experiences.
+- [Picasso](https://square.github.io/picasso/) - Picasso is open source and one of the widely used image download libraries in Android.
+
 
 ## Dependencies
 
